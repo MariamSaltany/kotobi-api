@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\Book\BookController;
-use App\Http\Controllers\Admin\Book\CategoryBookController;
 use App\Http\Controllers\Admin\Order\AdminOrderController;
 use App\Http\Controllers\Admin\PaymentMethodController;
-use App\Http\Controllers\Admin\Users\Author\AuthorController;
+use App\Http\Controllers\Customer\Book\CategoryBookController;
 use Illuminate\Support\Facades\Route;
 
 Route::apiResource('categories', CategoryBookController::class);
@@ -13,10 +12,11 @@ Route::apiResource('books', BookController::class)->only(['index','show']);
 
 Route::apiResource('payment-methods', PaymentMethodController::class);
 
-Route::prefix('/users/authors')->group(function () {
-    Route::patch('{user}/approve', [AuthorController::class, 'approve']);
-    Route::patch('{user}/block', [AuthorController::class, 'block']);
-    Route::get('/', [AuthorController::class, 'index']);
+Route::prefix('authors')->group(function () {
+    Route::get('/', ['App\Http\Controllers\Admin\Users\Author\AuthorController', 'index']);
+    Route::post('/', ['App\Http\Controllers\Admin\Users\Author\AuthorController', 'store']);
+    Route::patch('{user}/approve', ['App\Http\Controllers\Admin\Users\Author\AuthorController', 'approve']);
+    Route::patch('{user}/block', ['App\Http\Controllers\Admin\Users\Author\AuthorController', 'block']);
 });
 
 Route::get('orders', [AdminOrderController::class, 'index']);

@@ -60,6 +60,20 @@ class User extends Authenticatable
         ];
     }
 
+    public function scopeSearchByName($query, $search)
+    {
+        return $query->where(function ($q) use ($search) {
+            $driver = $q->getConnection()->getDriverName();
+            
+            $fullNameSql = $driver === 'sqlite' 
+                ? "first_name || ' ' || last_name" 
+                : "CONCAT(first_name, ' ', last_name)";
+
+            $q->whereRaw("$fullNameSql LIKE ?", ["%$search%"])
+            ->orWhere('username', 'LIKE', "%$search%");
+        });
+    }
+
     public function customer() {
         return $this->hasOne(Customer::class, 'user_id')->withDefault(); 
     }
