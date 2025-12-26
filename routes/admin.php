@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\Book\BookController;
 use App\Http\Controllers\Admin\Order\AdminOrderController;
 use App\Http\Controllers\Admin\PaymentMethodController;
-use App\Http\Controllers\Customer\Book\CategoryBookController;
+use App\Http\Controllers\Admin\Book\CategoryBookController;
 use Illuminate\Support\Facades\Route;
 
 Route::apiResource('categories', CategoryBookController::class);
