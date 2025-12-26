@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('categories', CategoryBookController::class);
 
-Route::apiResource('books', BookController::class)->only(['index','show']);
+Route::apiResource('books', BookController::class);
 
 Route::apiResource('payment-methods', PaymentMethodController::class);
 
